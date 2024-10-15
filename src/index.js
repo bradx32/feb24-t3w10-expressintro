@@ -14,6 +14,23 @@ app.get("/", (request, response) => {
 	});
 });
 
+app.post("/", (request, response) => {
+	response.json({
+		message: "POST request received!"
+	});
+});
+
+// http://localhost:3000/bananas
+app.post("/bananas", (request, response) => {
+	response.json({
+		message: "POST bananas received!"
+	});
+});
+
+const {router} = require("./controllers/pokemonController.js");
+// localhost:3000/pokemon/
+app.use("/pokemon", router);
+
 const PORT = 3000;
 
 app.listen(PORT, () => {

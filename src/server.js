@@ -40,14 +40,20 @@ app.get("/",
 	});
 });
 
-app.post("/", (request, response) => {
+app.post("/", xanderMiddleware, (request, response) => {
 	response.json({
 		message: "POST request received!"
 	});
 });
 
 // http://localhost:3000/bananas
-app.post("/bananas", (request, response) => {
+app.post(
+	"/bananas", 
+	(request, response, next) => {
+		console.log("Bananas route has run"); 
+		next();
+	}, 
+	(request, response) => {
 	response.json({
 		message: "POST bananas received!"
 	});
@@ -57,6 +63,10 @@ const PokemonController = require("./controllers/pokemonController.js");
 // const {pokemonRouter} = require("blah blah")
 // localhost:3000/pokemon/
 app.use("/pokemon", PokemonController);
+
+const UserController = require("./controllers/userController.js")
+// domainName:port/users
+app.use("/users", UserController);
 
 module.exports = {
 	app
